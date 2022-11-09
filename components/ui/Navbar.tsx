@@ -7,7 +7,7 @@ export const NavBar = () => {
     return (
         <AppBar>
             <Toolbar>
-                <NextLink href='/' passHref>
+                <NextLink href='/' style={{ textDecoration: 'none' }} passHref>
                     <Link display='flex' alignItems='center'>
                         <Typography variant='h6' component='div'>Teslo |</Typography>
                         <Typography component='div' sx={{ ml: 0.5 }}>Shop</Typography>
@@ -15,17 +15,17 @@ export const NavBar = () => {
                 </NextLink>
                 <Box flex={1} />
                 <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                    <NextLink href='/category/men' passHref>
+                    <NextLink href='/category/men' style={{ textDecoration: 'none' }} passHref>
                         <Link >
                             <Button>Hombres</Button>
                         </Link>
                     </NextLink>
-                    <NextLink href='/category/women' passHref>
+                    <NextLink href='/category/women' style={{ textDecoration: 'none' }} passHref>
                         <Link >
                             <Button>Mujeres</Button>
                         </Link>
                     </NextLink>
-                    <NextLink href='/category/kid' passHref>
+                    <NextLink href='/category/kid' style={{ textDecoration: 'none' }} passHref>
                         <Link >
                             <Button>Niños</Button>
                         </Link>
@@ -35,7 +35,7 @@ export const NavBar = () => {
                 <IconButton>
                     <SearchOutlined />
                 </IconButton>
-                <NextLink href='/cart' passHref>
+                <NextLink href='/cart' style={{ textDecoration: 'none' }} passHref>
                     <Link >
                         <IconButton>
                             <Badge badgeContent={2} color='secondary'>
