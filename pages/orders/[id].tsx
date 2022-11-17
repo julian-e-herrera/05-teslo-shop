@@ -43,7 +43,7 @@ const OrderPage = () => {
                             <Divider sx={{ my: 1 }} />
                             <Box display='flex' justifyContent='space-between'>
                                 <Typography variant='subtitle1' >Direccion de entrega</Typography>
-                                <NextLink href='/chechout/address' passHref>
+                                <NextLink href='/chechout/address' passHref legacyBehavior>
                                     <Link >
                                         Editar
                                     </Link>

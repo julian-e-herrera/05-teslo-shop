@@ -4,13 +4,13 @@ import { AppBar, Badge, Box, Button, IconButton, Input, InputAdornment, Link, To
 import { ClearOutlined, SearchOutlined, ShoppingCartOutlined } from '@mui/icons-material'
 import { useRouter } from 'next/router'
 import { useContext } from "react"
-import { UiContext } from "../../context"
+import { CartContext, UiContext } from "../../context"
 
 export const NavBar = () => {
 
     const { asPath, push } = useRouter()
     const { toggleSideMenu } = useContext(UiContext)
-
+    const { numberOfItem } = useContext(CartContext)
 
 
 
@@ -29,25 +29,25 @@ export const NavBar = () => {
     return (
         <AppBar>
             <Toolbar>
-                <NextLink href='/' style={{ textDecoration: 'none' }} passHref>
+                <NextLink href='/' style={{ textDecoration: 'none' }} passHref legacyBehavior >
                     <Link display='flex' alignItems='center'>
-                        <Typography variant='h6' component='div'>Teslo |</Typography>
-                        <Typography component='div' sx={{ ml: 0.5 }}>Shop</Typography>
+                        <Typography variant='h6' component='h1'>Teslo | </Typography>
+                        <Typography sx={{ ml: 0.5 }}>Shop</Typography>
                     </Link>
                 </NextLink>
                 <Box flex={1} />
                 <Box sx={{ display: isSearchVisible ? 'none' : { xs: 'none', sm: 'block' } }} className='fadeIn'>
-                    <NextLink href='/category/men' style={{ textDecoration: 'none' }} passHref>
+                    <NextLink href='/category/men' style={{ textDecoration: 'none' }} passHref legacyBehavior>
                         <Link >
                             <Button color={asPath === '/category/men' ? 'primary' : 'info'}>Hombres</Button>
                         </Link>
                     </NextLink>
-                    <NextLink href='/category/women' style={{ textDecoration: 'none' }} passHref>
+                    <NextLink href='/category/women' style={{ textDecoration: 'none' }} passHref legacyBehavior>
                         <Link >
                             <Button color={asPath === '/category/women' ? 'primary' : 'info'}>Mujeres</Button>
                         </Link>
                     </NextLink>
-                    <NextLink href='/category/kid' style={{ textDecoration: 'none' }} passHref>
+                    <NextLink href='/category/kid' style={{ textDecoration: 'none' }} passHref legacyBehavior>
                         <Link >
                             <Button color={asPath === '/category/kid' ? 'primary' : 'info'}>Niños</Button>
                         </Link>
@@ -87,10 +87,10 @@ export const NavBar = () => {
                 </IconButton>
 
 
-                <NextLink href='/cart' style={{ textDecoration: 'none' }} passHref>
+                <NextLink href='/cart' style={{ textDecoration: 'none' }} passHref legacyBehavior>
                     <Link >
                         <IconButton>
-                            <Badge badgeContent={2} color='secondary'>
+                            <Badge badgeContent={numberOfItem > 9 ? '+9' : numberOfItem} color='secondary'>
                                 <ShoppingCartOutlined />
                             </Badge>
                         </IconButton>
