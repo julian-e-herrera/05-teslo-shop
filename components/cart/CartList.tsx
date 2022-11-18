@@ -21,7 +21,7 @@ export const CartList: FC<Props> = ({ editable = false }) => {
 
     }
 
-    console.log(cart)
+
     return (
         <>
             {
