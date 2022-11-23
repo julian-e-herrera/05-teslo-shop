@@ -1,10 +1,19 @@
 import { Box, Button, Card, CardContent, Divider, Grid, Link, Typography } from '@mui/material'
-import React from 'react'
+import React, { useContext } from 'react'
 import { CartList, OrdenSummary } from '../../components/cart'
 import { ShopLayout } from '../../components/layouts'
 import NextLink from 'next/link'
+import { CartContext } from '../../context'
+import { countries } from '../../utils'
 
 const SummaryPage = () => {
+
+    const { shippingAddress, numberOfItem } = useContext(CartContext)
+
+    if (!shippingAddress) {
+        return (<></>)
+    }
+    const { firstName, lastName, address, address2 = '', city, country, phone, zip } = shippingAddress
     return (
         <ShopLayout title={'Resumen de orden'} pageDescription={'Resumen de la orden'}>
             <Typography variant='h1' component='h1'>
@@ -20,12 +29,12 @@ const SummaryPage = () => {
                     <Card className='summary-card'>
                         <CardContent >
                             <Typography variant='h2' >
-                                Resumen (3 productos)
+                                Resumen ({numberOfItem} {numberOfItem === 1 ? 'producto' : 'productos'})
                             </Typography>
                             <Divider sx={{ my: 1 }} />
                             <Box display='flex' justifyContent='space-between'>
                                 <Typography variant='subtitle1' >Direccion de entrega</Typography>
-                                <NextLink href='/chechout/address' passHref legacyBehavior>
+                                <NextLink href='/checkout/address' passHref legacyBehavior>
                                     <Link >
                                         Editar
                                     </Link>
@@ -33,11 +42,12 @@ const SummaryPage = () => {
                             </Box>
 
 
-                            <Typography>Julian</Typography>
-                            <Typography >Julian</Typography>
-                            <Typography >Julian</Typography>
-                            <Typography >Julian</Typography>
-                            <Typography >Julian</Typography>
+                            <Typography>{firstName} {lastName}</Typography>
+                            <Typography >{address} {address2 ? `,${address2}` : ''}</Typography>
+                            <Typography >{city} , {zip}</Typography>
+                            <Typography >{countries.find(c => c.code === country)?.name}</Typography>
+                            <Typography >{phone}</Typography>
+
 
                             <Divider sx={{ my: 1 }} />
                             <Box display='flex' justifyContent='end'>

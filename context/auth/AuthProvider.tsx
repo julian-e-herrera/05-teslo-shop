@@ -4,6 +4,7 @@ import { AuthContext, authReducer } from './';
 import tesloApi from '../../api/tesloApi';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 type Props = {
     children?: JSX.Element | JSX.Element[];
@@ -20,7 +21,7 @@ const AUTH_INITIAL_STATE: AuthState = {
 
 export const AuthProvider: FC<Props> = ({ children }) => {
     const [state, dispatch] = useReducer(authReducer, AUTH_INITIAL_STATE)
-
+    const router = useRouter()
 
     useEffect(() => {
         checkToken()
@@ -28,7 +29,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
 
 
     const checkToken = async () => {
-
+        if (Cookies.get('token')) return
         try {
             const { data } = await tesloApi.get('/user/validate-token')
             const { token, user } = data
@@ -53,6 +54,16 @@ export const AuthProvider: FC<Props> = ({ children }) => {
             return false
         }
     }
+
+    const logOut = () => {
+        if (!Cookies.get('token')) return
+        Cookies.remove('token')
+        Cookies.remove('cart')
+        router.reload()
+        // dispatch({ type: '[Auth] - LogOut' })
+    }
+
+
     const registerUser = async (name: string, email: string, password: string): Promise<{ hasError: boolean, message?: string }> => {
 
         try {
@@ -84,7 +95,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
     return (
         < AuthContext.Provider value={{
             ...state,
-            loginUser, registerUser
+            loginUser, registerUser, logOut
         }}>
             {children}
         </ AuthContext.Provider>
