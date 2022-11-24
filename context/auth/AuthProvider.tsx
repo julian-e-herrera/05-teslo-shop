@@ -5,6 +5,7 @@ import tesloApi from '../../api/tesloApi';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import { useSession, signOut } from "next-auth/react"
 
 type Props = {
     children?: JSX.Element | JSX.Element[];
@@ -22,24 +23,32 @@ const AUTH_INITIAL_STATE: AuthState = {
 export const AuthProvider: FC<Props> = ({ children }) => {
     const [state, dispatch] = useReducer(authReducer, AUTH_INITIAL_STATE)
     const router = useRouter()
+    const { data, status } = useSession()
+
 
     useEffect(() => {
-        checkToken()
-    }, [])
-
-
-    const checkToken = async () => {
-        if (Cookies.get('token')) return
-        try {
-            const { data } = await tesloApi.get('/user/validate-token')
-            const { token, user } = data
-            Cookies.set('token', token)
-            dispatch({ type: '[Auth] - LogIn', payload: user })
-
-        } catch (error) {
-            Cookies.remove('token')
+        if (status === 'authenticated') {
+            console.log(data?.user)
+            dispatch({ type: '[Auth] - LogIn', payload: data?.user as IUser })
         }
-    }
+    }, [status, data])
+    // useEffect(() => {
+    //     checkToken()
+    // }, [])
+
+
+    // const checkToken = async () => {
+    //     if (Cookies.get('token')) return
+    //     try {
+    //         const { data } = await tesloApi.get('/user/validate-token')
+    //         const { token, user } = data
+    //         Cookies.set('token', token)
+    //         dispatch({ type: '[Auth] - LogIn', payload: user })
+
+    //     } catch (error) {
+    //         Cookies.remove('token')
+    //     }
+    // }
 
 
     const loginUser = async (email: string, password: string): Promise<boolean> => {
@@ -56,10 +65,21 @@ export const AuthProvider: FC<Props> = ({ children }) => {
     }
 
     const logOut = () => {
-        if (!Cookies.get('token')) return
-        Cookies.remove('token')
+
         Cookies.remove('cart')
-        router.reload()
+        Cookies.remove('firstName')
+        Cookies.remove('lastName')
+        Cookies.remove('address')
+        Cookies.remove('address2')
+        Cookies.remove('zip')
+        Cookies.remove('city')
+        Cookies.remove('country')
+        Cookies.remove('phone')
+        signOut()
+
+        // if (!Cookies.get('token')) return
+        // Cookies.remove('token')
+        // router.reload()
         // dispatch({ type: '[Auth] - LogOut' })
     }
 

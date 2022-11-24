@@ -3,13 +3,16 @@ import type { NextPage } from 'next'
 import { ShopLayout } from '../components/layouts'
 import { Typography } from '@mui/material'
 
-
+import { useSession } from "next-auth/react"
 import { ProductList } from '../components/products';
 import { useProducts } from '../hooks';
 import { FullScreenLoading } from '../components/ui';
 
 
 const Home: NextPage = () => {
+
+  // const { session } = useSession()
+  // console.log(session)
 
   const { products, isLoading } = useProducts('/products')
 

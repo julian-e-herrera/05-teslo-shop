@@ -15,6 +15,7 @@ interface Props {
 export const CartList: FC<Props> = ({ editable = false }) => {
     const { cart, updateCartQuantity, removeCartProduct } = useContext(CartContext)
 
+
     const onNewCartQuantityValue = (product: ICartProduct, newCartQuantityValue: number) => {
         product.quantity = newCartQuantityValue
         updateCartQuantity(product)
