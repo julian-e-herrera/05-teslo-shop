@@ -1,19 +1,20 @@
-import { Box, Button, Card, CardContent, Divider, Grid, Link, Typography } from '@mui/material'
-import React, { useContext } from 'react'
+import { Box, Button, Card, CardContent, Chip, Divider, Grid, Link, Typography } from '@mui/material'
+import React, { useContext, useState } from 'react'
 import { CartList, OrdenSummary } from '../../components/cart'
 import { ShopLayout } from '../../components/layouts'
 import NextLink from 'next/link'
 import { CartContext } from '../../context'
-import { countries } from '../../utils'
+
 import { useEffect } from 'react';
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
 
 
 const SummaryPage = () => {
-    const { shippingAddress, numberOfItem } = useContext(CartContext)
+    const { shippingAddress, numberOfItem, createOrder } = useContext(CartContext)
     const router = useRouter()
-
+    const [isPosting, setIsPosting] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
 
     useEffect(() => {
         if (!Cookies.get('firstName')) {
@@ -22,6 +23,18 @@ const SummaryPage = () => {
 
     }, [router])
 
+
+    const onCreateOrder = async () => {
+        setIsPosting(true)
+
+        const { hasError, message } = await createOrder()
+        if (hasError) {
+            setIsPosting(false)
+            setErrorMessage(message)
+            return
+        }
+        router.replace(`/orders/${message}`)
+    }
 
 
     if (!shippingAddress) {
@@ -48,7 +61,7 @@ const SummaryPage = () => {
                             <Divider sx={{ my: 1 }} />
                             <Box display='flex' justifyContent='space-between'>
                                 <Typography variant='subtitle1' >Direccion de entrega</Typography>
-                                <NextLink href='/checkout/address' passHref legacyBehavior>
+                                <NextLink href='/checkout/address' passHref >
                                     <Link >
                                         Editar
                                     </Link>
@@ -66,17 +79,22 @@ const SummaryPage = () => {
 
                             <Divider sx={{ my: 1 }} />
                             <Box display='flex' justifyContent='end'>
-                                <NextLink href='/cart' passHref legacyBehavior>
+                                <NextLink href='/cart' passHref >
                                     <Link >
                                         Editar
                                     </Link>
                                 </NextLink>
                             </Box>
                             <OrdenSummary />
-                            <Box sx={{ mt: 3 }}>
-                                <Button color='secondary' className='circular-btn' fullWidth>
+                            <Box sx={{ mt: 3 }} display='flex' flexDirection='column'>
+                                <Button color='secondary' className='circular-btn' fullWidth onClick={onCreateOrder} disabled={isPosting}>
                                     Confirmar Orden
                                 </Button>
+                                <Chip
+                                    color='error'
+                                    label={errorMessage}
+                                    sx={{ display: errorMessage ? 'flex' : 'none', mt: 2 }}
+                                />
                             </Box>
                         </CardContent>
                     </Card>
