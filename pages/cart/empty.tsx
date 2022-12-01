@@ -17,7 +17,7 @@ const EmptyPage = () => (
                 <Typography>
                     Su carrito esta vacio
                 </Typography>
-                <NextLink href='/' style={{ textDecoration: 'none' }} passHref legacyBehavior >
+                <NextLink href='/' passHref  >
                     <Link typography='h4' color='secondary'
                     >
                         Regresar

@@ -26,7 +26,7 @@ export const ProductCard: FC<Props> = ({ product }) => {
             onMouseLeave={() => setIsHovered(false)}>
             <Card>
 
-                <NextLink href={`/product/${product.slug}`} style={{ textDecoration: 'none' }} passHref prefetch={false} legacyBehavior>
+                <NextLink href={`/product/${product.slug}`} passHref prefetch={false} >
                     <Link >
                         <CardActionArea>
                             {product.inStock === 0 && (

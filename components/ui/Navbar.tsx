@@ -29,7 +29,7 @@ export const NavBar = () => {
     return (
         <AppBar>
             <Toolbar>
-                <NextLink href='/' style={{ textDecoration: 'none' }} passHref legacyBehavior >
+                <NextLink href='/' passHref >
                     <Link display='flex' alignItems='center'>
                         <Typography variant='h6' component='h1'>Teslo | </Typography>
                         <Typography sx={{ ml: 0.5 }}>Shop</Typography>
@@ -37,17 +37,17 @@ export const NavBar = () => {
                 </NextLink>
                 <Box flex={1} />
                 <Box sx={{ display: isSearchVisible ? 'none' : { xs: 'none', sm: 'block' } }} className='fadeIn'>
-                    <NextLink href='/category/men' style={{ textDecoration: 'none' }} passHref legacyBehavior>
+                    <NextLink href='/category/men' passHref >
                         <Link >
                             <Button color={asPath === '/category/men' ? 'primary' : 'info'}>Hombres</Button>
                         </Link>
                     </NextLink>
-                    <NextLink href='/category/women' style={{ textDecoration: 'none' }} passHref legacyBehavior>
+                    <NextLink href='/category/women' passHref>
                         <Link >
                             <Button color={asPath === '/category/women' ? 'primary' : 'info'}>Mujeres</Button>
                         </Link>
                     </NextLink>
-                    <NextLink href='/category/kid' style={{ textDecoration: 'none' }} passHref legacyBehavior>
+                    <NextLink href='/category/kid' passHref>
                         <Link >
                             <Button color={asPath === '/category/kid' ? 'primary' : 'info'}>Niños</Button>
                         </Link>
@@ -87,7 +87,7 @@ export const NavBar = () => {
                 </IconButton>
 
 
-                <NextLink href='/cart' style={{ textDecoration: 'none' }} passHref legacyBehavior>
+                <NextLink href='/cart' passHref>
                     <Link >
                         <IconButton>
                             <Badge badgeContent={numberOfItem > 9 ? '+9' : numberOfItem} color='secondary'>
