@@ -39,7 +39,7 @@ export const CartList: FC<Props> = ({ editable = false, products }) => {
                                             <CardMedia
                                                 className='fadeIn'
                                                 component='img'
-                                                image={`/products/${product.image}`}
+                                                image={product.image}
                                                 alt={product.title}
                                                 sx={{ borderRadius: '5px' }}
                                             />
