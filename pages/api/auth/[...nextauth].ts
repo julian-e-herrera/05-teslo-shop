@@ -22,7 +22,7 @@ export const authOptions:NextAuthOptions = {
                 password: { label: 'Password', type: 'password', placeholder: 'password' },
                 
             },
-            async authorize(credentials) {
+            async authorize(credentials):Promise<any> {
                 
                 console.log(credentials)
                 return await dbUsers.checkUserEmailPassword(credentials!.email,credentials!.password)
@@ -65,7 +65,7 @@ callbacks: {
   },
   async session({ session, token, user }) {
      
-    session.accessToken = token.accessToken 
+    session.accessToken = token.accessToken as any
     session.user = token.user as any
     return session
   }
