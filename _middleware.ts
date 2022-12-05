@@ -6,7 +6,7 @@ export default withAuth(
     function middleware(req) {
         // console.log(req.nextauth);
         const { role } = req.nextauth.token?.user as any;
-        const validRoles = ['admin', 'super-user', 'seo'];
+        const validRoles = ['admin', 'super-user', 'SEO'];
  
         if (!validRoles.includes(role)) {
             return NextResponse.redirect(new URL('/', req.url));
